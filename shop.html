@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>悦选商城 | 发现心仪好物</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f5f7fb;
+            font-family: 'Inter', system-ui, sans-serif;
+            padding: 24px 20px 56px;
+            color: #1a2c3e;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .shop-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .shop-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #1e4668, #2d6a9f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .shop-header p {
+            color: #5f7f9e;
+            margin-top: 8px;
+        }
+        .toolbar-front {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 60px;
+            margin-bottom: 32px;
+            border: 1px solid #eef2f8;
+        }
+        .search-area {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            background: #f1f4f9;
+            border-radius: 48px;
+            padding: 8px 20px;
+            gap: 10px;
+        }
+        .search-area input {
+            border: none;
+            background: transparent;
+            width: 100%;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .filter-chip {
+            background: white;
+            border: 1px solid #dce5ef;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #2c4c6e;
+        }
+        .filter-chip.active {
+            background: #1e4668;
+            border-color: #1e4668;
+            color: white;
+        }
+        /* 商品网格 - 大图 */
+        .goods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 28px;
+            margin-bottom: 40px;
+        }
+        .product-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            transition: transform 0.25s, box-shadow 0.3s;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.03);
+            border: 1px solid #edf2f7;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 28px -12px rgba(0,0,0,0.12);
+        }
+        .card-img-area {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #fafcff;
+            overflow: hidden;
+        }
+        .card-img-area img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+        .product-card:hover .card-img-area img {
+            transform: scale(1.03);
+        }
+        .badge-stack {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            z-index: 2;
+        }
+        .badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            background: rgba(0,0,0,0.7);
+            color: white;
+        }
+        .badge.hot { background: #e26d3c; }
+        .badge.new { background: #2d8f6e; }
+        .badge.discount { background: #d93838; }
+        .card-info {
+            padding: 18px 16px 20px;
+        }
+        .product-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            line-height: 1.35;
+            margin-bottom: 8px;
+        }
+        .price-container {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 8px 0 6px;
+        }
+        .current-price {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #c7362b;
+        }
+        .old-price {
+            font-size: 0.85rem;
+            color: #8dabca;
+            text-decoration: line-through;
+        }
+        .product-desc {
+            font-size: 0.85rem;
+            color: #5b7a9a;
+            line-height: 1.45;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        /* 分页样式 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .page-btn {
+            background: white;
+            border: 1px solid #dce5ef;
+            padding: 8px 16px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+        .page-btn.active {
+            background: #1e4668;
+            color: white;
+            border-color: #1e4668;
+        }
+        .page-btn:hover:not(.active) {
+            background: #eef2ff;
+        }
+        .empty-state {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 60px;
+            background: white;
+            border-radius: 48px;
+            color: #99b2cf;
+        }
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #8aa2c2;
+        }
+        @media (max-width: 640px) {
+            .goods-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+            .current-price { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="shop-header">
+        <h1>✨ 悦选好物</h1>
+        <p>甄选品质 · 灵感生活</p>
+    </div>
+
+    <div class="toolbar-front">
+        <div class="search-area">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="搜索商品名称或简介...">
+        </div>
+        <div class="filter-buttons" id="filterGroup">
+            <button data-filter="all" class="filter-chip active">全部</button>
+            <button data-filter="hot" class="filter-chip">🔥 热销</button>
+            <button data-filter="new" class="filter-chip">✨ 新品</button>
+            <button data-filter="discount" class="filter-chip">🏷️ 折扣</button>
+        </div>
+    </div>
+
+    <div class="goods-grid" id="goodsGrid">
+        <div class="loading"><i class="fas fa-spinner fa-pulse"></i> 加载商品中...</div>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+</div>
+
+<script type="module">
+    // ========== 请粘贴您的 Firebase 配置（与后台相同） ==========
+    const firebaseConfig = {
+        apiKey: "AIzaSyBYbH6gku773Y89CWYMg3cXwH4z7Dlcv7s",
+  authDomain: "mengdexiaodian.firebaseapp.com",
+  projectId: "mengdexiaodian",
+  storageBucket: "mengdexiaodian.firebasestorage.app",
+  messagingSenderId: "429775399747",
+  appId: "1:429775399747:web:57b0567d10accb98e89df6",
+    };
+    // =======================================================
+
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+    import { getFirestore, collection, getDocs, orderBy, query } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const productsCollection = collection(db, "products");
+
+    let allProducts = [];
+    let currentFilter = "all";
+    let currentSearch = "";
+    let currentPage = 1;
+    const pageSize = 8;
+
+    // 加载数据
+    async function loadProducts() {
+        try {
+            const q = query(productsCollection, orderBy("createdAt", "desc"));
+            const snapshot = await getDocs(q);
+            allProducts = [];
+            snapshot.forEach(doc => {
+                allProducts.push({ id: doc.id, ...doc.data() });
+            });
+            render();
+        } catch (error) {
+            console.error("加载失败:", error);
+            document.getElementById("goodsGrid").innerHTML = '<div class="empty-state">加载失败，请检查网络或稍后再试</div>';
+        }
+    }
+
+    // 筛选逻辑
+    function getFilteredProducts() {
+        let filtered = [...allProducts];
+        if (currentSearch.trim()) {
+            const kw = currentSearch.trim().toLowerCase();
+            filtered = filtered.filter(p => 
+                (p.name && p.name.toLowerCase().includes(kw)) || 
+                (p.desc && p.desc.toLowerCase().includes(kw))
+            );
+        }
+        if (currentFilter === "hot") {
+            filtered = filtered.filter(p => p.isHot === true);
+        } else if (currentFilter === "new") {
+            filtered = filtered.filter(p => p.isNew === true);
+        } else if (currentFilter === "discount") {
+            filtered = filtered.filter(p => p.isDiscount || (p.oldPrice && p.oldPrice > p.price));
+        }
+        return filtered;
+    }
+
+    function hasDiscount(p) {
+        return p.isDiscount || (p.oldPrice && p.oldPrice > p.price);
+    }
+
+    // 渲染当前页
+    function render() {
+        const filtered = getFilteredProducts();
+        const totalPages = Math.ceil(filtered.length / pageSize);
+        if (currentPage > totalPages) currentPage = totalPages || 1;
+        const start = (currentPage - 1) * pageSize;
+        const pageItems = filtered.slice(start, start + pageSize);
+        const grid = document.getElementById("goodsGrid");
+
+        if (pageItems.length === 0) {
+            grid.innerHTML = '<div class="empty-state"><i class="fas fa-box-open"></i> 没有找到商品，看看其他分类~</div>';
+            document.getElementById("pagination").innerHTML = '';
+            return;
+        }
+
+        let html = '';
+        for (let p of pageItems) {
+            const showOld = (p.oldPrice && p.oldPrice > p.price);
+            const priceShow = (p.price || 0).toFixed(2);
+            let badges = '';
+            if (p.isHot) badges += `<span class="badge hot">🔥 热销</span>`;
+            if (p.isNew) badges += `<span class="badge new">✨ 新品</span>`;
+            if (hasDiscount(p)) badges += `<span class="badge discount">🏷️ 折扣</span>`;
+            const imgUrl = p.img || 'https://picsum.photos/id/20/500/500';
+            html += `
+                <div class="product-card">
+                    <div class="card-img-area">
+                        <img src="${imgUrl}" alt="${escapeHtml(p.name || '商品')}" onerror="this.src='https://picsum.photos/500/500?grayscale'">
+                        <div class="badge-stack">${badges}</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="product-title">${escapeHtml(p.name || '未命名商品')}</div>
+                        <div class="price-container">
+                            <span class="current-price">¥${priceShow}</span>
+                            ${showOld ? `<span class="old-price">¥${p.oldPrice.toFixed(2)}</span>` : ''}
+                        </div>
+                        <div class="product-desc">${escapeHtml(p.desc || '精选好物，品质保证。')}</div>
+                    </div>
+                </div>
+            `;
+        }
+        grid.innerHTML = html;
+        renderPagination(totalPages);
+    }
+
+    function renderPagination(totalPages) {
+        const container = document.getElementById("pagination");
+        if (totalPages <= 1) {
+            container.innerHTML = '';
+            return;
+        }
+        let btns = '';
+        for (let i = 1; i <= totalPages; i++) {
+            btns += `<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+        }
+        container.innerHTML = btns;
+        document.querySelectorAll('.page-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentPage = parseInt(btn.dataset.page);
+                render();
+                window.scrollTo({ top: 
