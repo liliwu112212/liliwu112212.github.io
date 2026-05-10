@@ -1,0 +1,933 @@
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MDXD 高级浏览页</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#0b0b12;
+    color:#fff;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;
+}
+
+/* 顶部 */
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    backdrop-filter:blur(14px);
+    background:rgba(10,10,20,.75);
+    border-bottom:1px solid rgba(255,255,255,.08);
+    padding:14px;
+}
+
+.topbar{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:700;
+    cursor:pointer;
+    user-select:none;
+}
+
+.search{
+    flex:1;
+}
+
+.search input{
+    width:100%;
+    background:#171722;
+    border:none;
+    color:#fff;
+    padding:12px;
+    border-radius:14px;
+    outline:none;
+}
+
+.notice{
+    margin-top:12px;
+    background:linear-gradient(90deg,#ff4fa3,#7d5cff);
+    padding:12px;
+    border-radius:14px;
+    font-size:14px;
+}
+
+/* 标签栏 */
+.tabs{
+    display:flex;
+    gap:10px;
+    overflow:auto;
+    padding:16px 14px 0;
+}
+
+.tab{
+    padding:10px 16px;
+    background:#171722;
+    border-radius:999px;
+    white-space:nowrap;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.tab:hover{
+    background:#ff4fa3;
+}
+
+/* 卡片 */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:18px;
+    padding:18px;
+}
+
+.card{
+    background:#151520;
+    border-radius:24px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.05);
+    transition:.25s;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+}
+
+.card img{
+    width:100%;
+    height:420px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:16px;
+}
+
+.name{
+    font-size:22px;
+    font-weight:700;
+}
+
+.price{
+    font-size:18px;
+    color:#ff4fa3;
+    margin:6px 0;
+    font-weight:700;
+}
+
+.tags{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin:12px 0;
+}
+
+.tag{
+    background:#232336;
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:12px;
+}
+
+.desc{
+    opacity:.75;
+    line-height:1.6;
+}
+
+/* 分页 */
+.page{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    padding:30px;
+    flex-wrap:wrap;
+}
+
+.page button{
+    background:#1d1d2c;
+    color:#fff;
+    border:none;
+    padding:10px 16px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+/* 后台 */
+.admin{
+    position:fixed;
+    inset:0;
+    background:#0b0b12;
+    z-index:999;
+    display:none;
+    overflow:auto;
+    padding:20px;
+}
+
+.admin input,
+.admin textarea{
+    width:100%;
+    background:#171722;
+    border:none;
+    color:#fff;
+    padding:12px;
+    border-radius:12px;
+    margin-bottom:12px;
+}
+
+.admin button{
+    background:#ff4fa3;
+    border:none;
+    color:#fff;
+    padding:12px 18px;
+    border-radius:12px;
+    cursor:pointer;
+    margin-right:10px;
+    margin-bottom:10px;
+}
+
+.footer{
+    text-align:center;
+    opacity:.5;
+    padding:20px;
+    cursor:pointer;
+}
+
+@media(max-width:700px){
+
+    .card img{
+        height:340px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="topbar">
+
+<div class="logo" id="logo">
+MDXD
+</div>
+
+<div class="search">
+<input type="text" id="searchInput" placeholder="搜索内容 / 标签 / 名字">
+</div>
+
+</div>
+
+<div class="notice" id="noticeBar">📢孟德小店只做良心好物，薄利经营不套路，感谢各位老板多多捧场支持🙏 ---------主人公均可在视频平台搜到</div>
+
+</header>
+
+<!-- 标签 -->
+<div class="tabs"><div class="tab">全部</div><div class="tab">微密圈</div><div class="tab">反差</div><div class="tab">音频</div><div class="tab">SM</div><div class="tab">熟女</div><div class="tab">AI</div><div class="tab">岛遇</div><div class="tab">少妇，宝妈</div><div class="tab">纯欲</div></div>
+
+<!-- 商品 -->
+<div class="grid" id="grid"><div class="card">
+        <img src="https://img.cdn1.vip/i/6a0092daa1b05_1778422490.webp">
+        <div class="card-content">
+
+            <div class="name">安妮-yoo</div>
+
+            <div class="price">￥15</div>
+
+            <div class="tags">
+                
+                    <div class="tag">微密圈</div>
+                
+            </div>
+
+            <div class="desc">巨乳，肥臀，透视蕾丝，超大合集12G</div>
+
+        </div>
+        </div><div class="card">
+        <img src="https://img.cdn1.vip/i/6a00922b9abc9_1778422315.webp">
+        <div class="card-content">
+
+            <div class="name">W没有圆子，依阳baby</div>
+
+            <div class="price">￥25</div>
+
+            <div class="tags">
+                
+                    <div class="tag">反差</div>
+                
+            </div>
+
+            <div class="desc">御姐身材反差拉满，自拍脱衣舞，自慰</div>
+
+        </div>
+        </div><div class="card">
+        <img src="https://img.cdn1.vip/i/6a00917810e47_1778422136.webp">
+        <div class="card-content">
+
+            <div class="name">宝儿茹</div>
+
+            <div class="price">￥8</div>
+
+            <div class="tags">
+                
+                    <div class="tag">微密圈</div>
+                
+            </div>
+
+            <div class="desc">黑丝，御姐，巨乳细腰，身体雪白</div>
+
+        </div>
+        </div><div class="card">
+        <img src="https://img.cdn1.vip/i/6a009026ae87f_1778421798.webp">
+        <div class="card-content">
+
+            <div class="name">一笑呢</div>
+
+            <div class="price">￥8</div>
+
+            <div class="tags">
+                
+                    <div class="tag">微密圈</div>
+                
+            </div>
+
+            <div class="desc">百万粉丝，铁粉空间，反差诱惑</div>
+
+        </div>
+        </div><div class="card">
+        <img src="https://img.cdn1.vip/i/69fccb6522b35_1778174821.webp">
+        <div class="card-content">
+
+            <div class="name">步非烟-第四季（110集）</div>
+
+            <div class="price">￥45</div>
+
+            <div class="tags">
+                
+                    <div class="tag">音频</div>
+                
+            </div>
+
+            <div class="desc">最新第四季收集不易，步非烟官方单集售价都是30＋，</div>
+
+        </div>
+        </div><div class="card">
+        <img src="https://img.cdn1.vip/i/69fedd98d68c2_1778310552.webp">
+        <div class="card-content">
+
+            <div class="name">步非烟-第三季（800集）</div>
+
+            <div class="price">￥45</div>
+
+            <div class="tags">
+                
+                    <div class="tag">音频</div>
+                
+            </div>
+
+            <div class="desc">好好好</div>
+
+        </div>
+        </div></div>
+
+<!-- 分页 -->
+<div class="page"><button>上一页</button><button style="background: rgb(255, 79, 163);">1</button><button>2</button><button>3</button><button>4</button><button>下一页</button></div>
+
+<div class="footer">
+高级响应式 HTML 浏览页
+</div>
+
+<!-- 后台 -->
+<div class="admin" id="adminPanel">
+
+<h2>后台控制台</h2>
+
+<div id="adminList"></div>
+
+<input id="titleInput" placeholder="名字">
+
+<input id="imageInput" placeholder="图片链接">
+
+<input id="tagInput" placeholder="标签，用逗号分隔">
+
+<textarea id="descInput" placeholder="简介"></textarea>
+
+<input id="priceInput" placeholder="价格">
+
+<button onclick="saveCard()">保存内容</button>
+
+<button onclick="addNewCard()">添加新商品</button>
+
+<button onclick="exportData()">导出JSON</button>
+
+<hr style="margin:20px 0;border-color:#222">
+
+<h2>公告编辑</h2>
+
+<textarea id="noticeInput"></textarea>
+
+<button onclick="saveNotice()">保存公告</button>
+
+<hr style="margin:20px 0;border-color:#222">
+
+<h2>标签管理</h2>
+
+<input id="newTagInput" placeholder="输入新标签">
+
+<button onclick="addTag()">添加标签</button>
+
+<div id="tagList"></div>
+
+<hr style="margin:20px 0;border-color:#222">
+
+<button onclick="closeAdmin()">关闭后台</button>
+
+</div>
+
+<script>
+
+/* 默认数据 */
+const defaultData=[
+
+{
+name:"小鹿酱",
+image:"https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200&auto=format&fit=crop",
+tags:["女友感","温柔"],
+desc:"下播后喜欢聊天，氛围感很强。",
+price:"￥100"
+},
+
+{
+name:"奶糖",
+image:"https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?q=80&w=1200&auto=format&fit=crop",
+tags:["御姐","陪伴"],
+desc:"深夜在线，偏成熟风格。",
+price:"￥120"
+},
+
+{
+name:"安安",
+image:"https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop",
+tags:["自拍感","高颜值"],
+desc:"日常分享系风格。",
+price:"￥80"
+}
+
+];
+
+/* 本地数据 */
+let data = JSON.parse(localStorage.getItem("myData") || "null") || defaultData.slice();
+
+let customTags = JSON.parse(localStorage.getItem("customTags") || "[]");
+
+let editIndex = null;
+
+/* 分页 */
+let currentPage = 1;
+
+const pageSize = 6;
+
+/* 渲染卡片 */
+function renderCards(list){
+
+    const grid=document.getElementById("grid");
+
+    grid.innerHTML="";
+
+    const totalPages = Math.ceil(list.length / pageSize);
+
+    if(currentPage > totalPages){
+
+        currentPage = totalPages || 1;
+
+    }
+
+    const start = (currentPage - 1) * pageSize;
+
+    const end = start + pageSize;
+
+    const currentList = list.slice(start,end);
+
+    currentList.forEach(item=>{
+
+        const card=document.createElement("div");
+
+        card.className="card";
+
+        card.innerHTML=`
+        <img src="${item.image}">
+        <div class="card-content">
+
+            <div class="name">${item.name}</div>
+
+            <div class="price">${item.price || ''}</div>
+
+            <div class="tags">
+                ${item.tags.map(tag=>`
+                    <div class="tag">${tag}</div>
+                `).join("")}
+            </div>
+
+            <div class="desc">${item.desc}</div>
+
+        </div>
+        `;
+
+        grid.appendChild(card);
+
+    });
+
+    renderPagination(list,totalPages);
+
+}
+
+/* 分页 */
+function renderPagination(list,totalPages){
+
+    const pageDiv=document.querySelector(".page");
+
+    pageDiv.innerHTML="";
+
+    const prevBtn=document.createElement("button");
+
+    prevBtn.innerText="上一页";
+
+    prevBtn.onclick=()=>{
+
+        if(currentPage>1){
+
+            currentPage--;
+
+            renderCards(list);
+
+        }
+
+    };
+
+    pageDiv.appendChild(prevBtn);
+
+    for(let i=1;i<=totalPages;i++){
+
+        const btn=document.createElement("button");
+
+        btn.innerText=i;
+
+        if(i===currentPage){
+
+            btn.style.background="#ff4fa3";
+
+        }
+
+        btn.onclick=()=>{
+
+            currentPage=i;
+
+            renderCards(list);
+
+        };
+
+        pageDiv.appendChild(btn);
+
+    }
+
+    const nextBtn=document.createElement("button");
+
+    nextBtn.innerText="下一页";
+
+    nextBtn.onclick=()=>{
+
+        if(currentPage<totalPages){
+
+            currentPage++;
+
+            renderCards(list);
+
+        }
+
+    };
+
+    pageDiv.appendChild(nextBtn);
+
+}
+
+/* 标签 */
+function renderTabs(){
+
+    const tabsDiv=document.querySelector(".tabs");
+
+    tabsDiv.innerHTML="";
+
+    const allTags = new Set(customTags);
+
+    data.forEach(item=>{
+
+        item.tags.forEach(tag=>{
+
+            allTags.add(tag);
+
+        });
+
+    });
+
+    const tags=["全部",...allTags];
+
+    tags.forEach(tag=>{
+
+        const div=document.createElement("div");
+
+        div.className="tab";
+
+        div.innerText=tag;
+
+        div.onclick=()=>{
+
+            currentPage=1;
+
+            if(tag==="全部"){
+
+                renderCards(data);
+
+            }else{
+
+                renderCards(
+
+                    data.filter(item=>item.tags.includes(tag))
+
+                );
+
+            }
+
+        };
+
+        tabsDiv.appendChild(div);
+
+    });
+
+    renderTagList();
+
+}
+
+/* 后台商品列表 */
+function renderAdminList(){
+
+    const adminList=document.getElementById("adminList");
+
+    adminList.innerHTML="<h3>商品列表</h3>";
+
+    data.forEach((item,index)=>{
+
+        const box=document.createElement("div");
+
+        box.style.marginBottom="8px";
+
+        const editBtn=document.createElement("button");
+
+        editBtn.innerText=item.name;
+
+        editBtn.onclick=()=>editCard(index);
+
+        const delBtn=document.createElement("button");
+
+        delBtn.innerText="删除";
+
+        delBtn.style.background="red";
+
+        delBtn.onclick=()=>deleteCard(index);
+
+        box.appendChild(editBtn);
+
+        box.appendChild(delBtn);
+
+        adminList.appendChild(box);
+
+    });
+
+}
+
+/* 编辑 */
+function editCard(index){
+
+    editIndex=index;
+
+    const item=data[index];
+
+    titleInput.value=item.name;
+
+    imageInput.value=item.image;
+
+    tagInput.value=item.tags.join(",");
+
+    descInput.value=item.desc;
+
+    priceInput.value=item.price;
+
+}
+
+/* 删除 */
+function deleteCard(index){
+
+    if(confirm("确认删除？")){
+
+        data.splice(index,1);
+
+        localStorage.setItem("myData",JSON.stringify(data));
+
+        renderCards(data);
+
+        renderAdminList();
+
+        renderTabs();
+
+    }
+
+}
+
+/* 保存 */
+function saveCard(){
+
+    const item={
+
+        name:titleInput.value,
+
+        image:imageInput.value,
+
+        tags:tagInput.value.split(",").map(t=>t.trim()).filter(Boolean),
+
+        desc:descInput.value,
+
+        price:priceInput.value
+
+    };
+
+    if(!item.name || !item.image) return;
+
+    if(editIndex===null){
+
+        data.unshift(item);
+
+    }else{
+
+        data[editIndex]=item;
+
+        editIndex=null;
+
+    }
+
+    localStorage.setItem("myData",JSON.stringify(data));
+
+    renderCards(data);
+
+    renderAdminList();
+
+    renderTabs();
+
+    alert("保存成功");
+
+}
+
+/* 新增 */
+function addNewCard(){
+
+    editIndex=null;
+
+    titleInput.value="";
+
+    imageInput.value="";
+
+    tagInput.value="";
+
+    descInput.value="";
+
+    priceInput.value="";
+
+}
+
+/* 添加标签 */
+function addTag(){
+
+    const tag=newTagInput.value.trim();
+
+    if(tag && !customTags.includes(tag)){
+
+        customTags.push(tag);
+
+        localStorage.setItem("customTags",JSON.stringify(customTags));
+
+        newTagInput.value="";
+
+        renderTabs();
+
+    }
+
+}
+
+/* 标签列表 */
+function renderTagList(){
+
+    const tagList=document.getElementById("tagList");
+
+    tagList.innerHTML="";
+
+    customTags.forEach(tag=>{
+
+        const div=document.createElement("div");
+
+        div.style.marginBottom="6px";
+
+        div.innerText=tag;
+
+        tagList.appendChild(div);
+
+    });
+
+}
+
+/* 公告 */
+function saveNotice(){
+
+    const text=noticeInput.value;
+
+    noticeBar.innerText=text;
+
+    localStorage.setItem("noticeText",text);
+
+}
+
+/* 搜索 */
+searchInput.addEventListener("input",e=>{
+
+    const keyword=e.target.value.toLowerCase();
+
+    currentPage=1;
+
+    renderCards(
+
+        data.filter(item=>
+
+            item.name.toLowerCase().includes(keyword)
+
+            ||
+
+            item.desc.toLowerCase().includes(keyword)
+
+            ||
+
+            item.tags.join(" ").toLowerCase().includes(keyword)
+
+        )
+
+    );
+
+});
+
+/* 导出JSON */
+function exportData(){
+
+    const blob=new Blob(
+
+        [JSON.stringify(data,null,2)],
+
+        {type:"application/json"}
+
+    );
+
+    const a=document.createElement("a");
+
+    a.href=URL.createObjectURL(blob);
+
+    a.download="data.json";
+
+    a.click();
+
+}
+
+/* 导出HTML */
+function exportFullHTML(){
+
+    const html=document.documentElement.outerHTML;
+
+    const blob=new Blob([html],{type:"text/html"});
+
+    const a=document.createElement("a");
+
+    a.href=URL.createObjectURL(blob);
+
+    a.download="MDXD_export.html";
+
+    a.click();
+
+}
+
+/* 后台 */
+let clickCount=0;
+
+logo.addEventListener("click",()=>{
+
+    clickCount++;
+
+    if(clickCount>=5){
+
+        adminPanel.style.display="block";
+
+        renderAdminList();
+
+        clickCount=0;
+
+    }
+
+});
+
+/* 关闭后台 */
+function closeAdmin(){
+
+    adminPanel.style.display="none";
+
+}
+
+/* footer 导出HTML */
+let exportClick=0;
+
+document.querySelector(".footer").addEventListener("click",()=>{
+
+    exportClick++;
+
+    if(exportClick>=5){
+
+        exportClick=0;
+
+        exportFullHTML();
+
+    }
+
+});
+
+/* 初始化 */
+window.addEventListener("load",()=>{
+
+    renderCards(data);
+
+    renderTabs();
+
+    const noticeText=localStorage.getItem("noticeText");
+
+    if(noticeText){
+
+        noticeBar.innerText=noticeText;
+
+    }
+
+});
+</script>
+
+
+</body></html>
